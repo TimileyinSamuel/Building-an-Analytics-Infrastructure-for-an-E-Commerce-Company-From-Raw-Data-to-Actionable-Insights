@@ -122,6 +122,9 @@ sources:
 
       - name: order_reviews
         description: "This dataset includes data about the reviews made by the customers."
+        freshness:
+          warn_after: {count: 48, period: hour}
+        loaded_at_field: review_creation_date
         columns:
           - name: review_id
             description: "unique review identifier"
@@ -158,6 +161,9 @@ sources:
 
       - name: orders
         description: "This is the core dataset. From each order you might find all other information."
+        freshness:
+          warn_after: {count: 48, period: hour}
+        loaded_at_field: order_purchase_timestamp
         columns:
           - name: order_id
             description: "unique identifier of the order."
