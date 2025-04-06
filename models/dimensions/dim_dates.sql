@@ -1,5 +1,3 @@
--- models/dimensions/dim_dates.sql
-
 WITH date_spine AS (
     SELECT
         day AS full_date

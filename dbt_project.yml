@@ -42,3 +42,5 @@ models:
       +materialized: view
     dimensions:
       +materialized: table
+    facts:
+      +materialized: table

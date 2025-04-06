@@ -1,5 +1,3 @@
--- models/dimensions/dim_customers.sql
-
 WITH base_customers AS (
     SELECT
         unique_customer_id,
