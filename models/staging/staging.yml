@@ -17,6 +17,7 @@ models:
       - name: last_updated_at
         description: "The last time fivetran imported or updated this row"
 
+
   - name: stg_geolocation
     description: "Staging model for Brazilian zip codes and lat/lng coordinates."
     columns:
@@ -33,6 +34,7 @@ models:
       - name: last_updated_at
         description: "The last time fivetran imported or updated this row"
 
+
   - name: stg_order_items
     description: "Staging model for items purchased within each order."
     columns:
@@ -48,12 +50,21 @@ models:
         description: "Shows the seller shipping limit date for handling the order over to the logistic partner."
       - name: price
         description: "item price"
+        data_tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+      
       - name: freight_value
         description: "item freight value item (if an order has more than one item the freight value is split between items)"
+        data_tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
       - name: total_item_value
         description: "sum of price and freight_value"
       - name: last_updated_at
         description: "The last time fivetran imported or updated this row"
+
 
   - name: stg_order_payments
     description: "Staging model for orders payment options."
@@ -70,6 +81,7 @@ models:
         description: "transaction value."
       - name: last_updated_at
         description: "The last time fivetran imported or updated this row"
+
 
   - name: stg_order_reviews
     description: "Staging model for reviews made by customers."
@@ -96,6 +108,7 @@ models:
 
       - name: last_updated_at
         description: "The last time fivetran imported or updated this row"
+
 
   - name: stg_orders
     description: "Staging model for core order-level information."
@@ -130,6 +143,7 @@ models:
       - name: last_updated_at
         description: "The last time fivetran imported or updated this row"
 
+
   - name: stg_products
     description: "Staging model for products sold by the company."
     columns:
@@ -139,14 +153,31 @@ models:
         description: "root category of product, in Portuguese."
       - name: product_weight_g
         description: "product weight measured in grams."
+        data_tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
       - name: product_length_cm
         description: "product length measured in centimeters."
+        data_tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
       - name: product_height_cm
         description: "product height measured in centimeters."
+        data_tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
       - name: product_width_cm
         description: "product width measured in centimeters."
+        data_tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
       - name: last_updated_at
         description: "The last time fivetran imported or updated this row"
+
 
   - name: stg_sellers
     description: "Staging model for sellers that fulfilled orders made at Olist."
