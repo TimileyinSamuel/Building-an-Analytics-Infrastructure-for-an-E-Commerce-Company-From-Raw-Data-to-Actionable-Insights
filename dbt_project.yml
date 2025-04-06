@@ -44,3 +44,5 @@ models:
       +materialized: table
     facts:
       +materialized: table
+    marts:
+      +materialized: table
