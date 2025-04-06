@@ -1,6 +1,7 @@
 WITH raw_customers AS (
     SELECT *
-    FROM {{ source('ecommerce', 'customers') }}
+    FROM {{ ref('customers_snapshot') }}
+    WHERE dbt_valid_to IS NULL
 )
 
 SELECT customer_id,

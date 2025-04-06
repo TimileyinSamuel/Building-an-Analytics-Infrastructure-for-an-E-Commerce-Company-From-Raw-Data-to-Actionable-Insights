@@ -1,6 +1,7 @@
 WITH raw_sellers AS (
     SELECT *
-    FROM {{ source('ecommerce', 'sellers') }}
+    FROM {{ ref('sellers_snapshot') }}
+    WHERE dbt_valid_to IS NULL
 )
 
 SELECT 
