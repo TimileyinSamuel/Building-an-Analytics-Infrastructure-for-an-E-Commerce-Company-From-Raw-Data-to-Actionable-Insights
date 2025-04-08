@@ -50,6 +50,7 @@ customer_classification AS (
         ON a.unique_customer_id = ad.unique_customer_id
 )
 
+
 SELECT 
     cc.unique_customer_id,
     cc.first_order_date,
@@ -58,8 +59,14 @@ SELECT
     cc.avg_days_between_orders,
     cc.loyalty_tier,
     dc.customer_city,
-    dc.customer_state
+    dc.customer_state,
+    d.year,        
+    d.month,       
+    d.month_name,  
+    d.quarter,     
+    d.season       
 FROM customer_classification cc
 LEFT JOIN {{ ref('dim_customers') }} dc
     ON cc.unique_customer_id = dc.unique_customer_id
-
+LEFT JOIN {{ ref('dim_dates') }} d
+    ON DATE(cc.first_order_date) = d.full_date  

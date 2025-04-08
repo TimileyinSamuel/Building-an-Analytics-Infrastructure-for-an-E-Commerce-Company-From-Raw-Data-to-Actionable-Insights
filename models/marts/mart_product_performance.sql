@@ -33,14 +33,18 @@ aggregated AS (
         AVG(od.freight_value) AS avg_freight_value,
         AVG(DATE_DIFF(od.order_delivered_customer_date, od.order_purchase_timestamp, DAY)) AS avg_days_to_deliver,
         COUNTIF(od.is_late_delivery = TRUE) AS num_late_deliveries,
-        SAFE_DIVIDE(COUNTIF(od.is_late_delivery = TRUE), COUNT(*)) AS percent_late_deliveries
+        SAFE_DIVIDE(COUNTIF(od.is_late_delivery = TRUE), COUNT(*)) AS percent_late_deliveries,
+        EXTRACT(YEAR FROM od.order_purchase_timestamp) AS year,
+        EXTRACT(MONTH FROM od.order_purchase_timestamp) AS month
     FROM orders_with_delivery od
-    GROUP BY od.product_id
+    GROUP BY od.product_id, year, month
 )
 
 SELECT 
     a.product_id,
     p.product_category_name,
+    a.year,
+    a.month,
     a.num_orders,
     a.total_units_sold,
     a.total_revenue,
@@ -55,3 +59,4 @@ LEFT JOIN {{ ref('dim_products') }} p
     ON a.product_id = p.product_id
 LEFT JOIN reviews_per_product r
     ON a.product_id = r.product_id
+ORDER BY a.year, a.month, p.product_category_name

@@ -136,4 +136,3 @@ models:
         description: "Ratio of freight cost to total payment."
       - name: product_value_ratio
         description: "Ratio of product cost to total payment."
-

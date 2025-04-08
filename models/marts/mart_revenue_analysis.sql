@@ -21,6 +21,8 @@ final_agg AS (
         o.order_id,
         o.order_purchase_timestamp,
         d.date_id,
+        d.year,
+        d.month,
         o.customer_id,
         o.unique_customer_id,
         o.order_status,
@@ -44,3 +46,4 @@ final_agg AS (
 
 SELECT *
 FROM final_agg
+WHERE year IS NOT NULL
