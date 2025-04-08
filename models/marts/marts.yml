@@ -1,0 +1,138 @@
+version: 2
+
+models:
+  - name: mart_customer_behaviour
+    description: "Customer segmentation and behavioral insights including recency, frequency, and loyalty tier classification."
+    columns:
+      - name: unique_customer_id
+        description: "Unique identifier for each customer."
+        tests:
+          - not_null
+          - unique
+      - name: first_order_date
+        description: "Date of the customer's first purchase."
+      - name: last_order_date
+        description: "Most recent purchase date."
+      - name: total_orders
+        description: "Total number of orders placed by the customer."
+      - name: avg_days_between_orders
+        description: "Average number of days between purchases."
+      - name: loyalty_tier
+        description: "Customer loyalty classification based on frequency of purchases."
+      - name: customer_city
+        description: "City of the customer."
+      - name: customer_state
+        description: "State of the customer."
+
+  - name: mart_geographic_analysis
+    description: "Analysis of customer activity and satisfaction segmented by location."
+    columns:
+      - name: customer_state
+        description: "State of the customer."
+      - name: customer_city
+        description: "City of the customer."
+      - name: unique_customers
+        description: "Total unique customers in the region."
+      - name: total_orders
+        description: "Total orders placed by customers in the region."
+      - name: total_revenue
+        description: "Total revenue generated from the region."
+      - name: avg_delivery_time_days
+        description: "Average delivery time for orders in the region."
+      - name: avg_review_score
+        description: "Average review score from customers in the region."
+      - name: pct_late_deliveries
+        description: "Percentage of late deliveries in the region."
+
+  - name: mart_operational_efficiency
+    description: "Operational metrics for delivery performance across the platform."
+    columns:
+      - name: full_date
+        description: "Calendar date."
+      - name: year
+        description: "Year of the date."
+      - name: month
+        description: "Month of the date."
+      - name: month_name
+        description: "Name of the month."
+      - name: week_of_year
+        description: "Week of the year."
+      - name: quarter
+        description: "Quarter of the year."
+      - name: season
+        description: "Season of the year."
+      - name: total_delivered_orders
+        description: "Total number of orders delivered on the date."
+      - name: late_deliveries
+        description: "Count of late deliveries."
+      - name: on_time_deliveries
+        description: "Count of on-time deliveries."
+      - name: avg_delivery_days
+        description: "Average days taken to deliver orders."
+      - name: pct_late_deliveries
+        description: "Percentage of late deliveries."
+      - name: pct_on_time_deliveries
+        description: "Percentage of on-time deliveries."
+
+  - name: mart_product_performance
+    description: "Insights on product-level performance metrics including sales, delivery, and reviews."
+    columns:
+      - name: product_id
+        description: "Unique product identifier."
+        tests:
+          - not_null
+      - name: product_category_name
+        description: "Category name of the product."
+      - name: num_orders
+        description: "Number of unique orders containing the product."
+      - name: total_units_sold
+        description: "Total number of units sold for the product."
+      - name: total_revenue
+        description: "Total revenue generated from product sales."
+      - name: avg_freight_value
+        description: "Average freight cost for delivering the product."
+      - name: avg_days_to_deliver
+        description: "Average number of days it took to deliver the product."
+      - name: num_late_deliveries
+        description: "Count of late deliveries for the product."
+      - name: percent_late_deliveries
+        description: "Proportion of orders that were delivered late."
+      - name: num_reviews
+        description: "Number of reviews left for the product."
+      - name: avg_review_score
+        description: "Average review score for the product."
+
+  - name: mart_revenue_analysis
+    description: "Revenue insights from order transactions, payments, and freight metrics."
+    columns:
+      - name: order_id
+        description: "Unique order identifier."
+        tests:
+          - not_null
+          - unique
+      - name: order_purchase_timestamp
+        description: "Date and time when the order was made."
+      - name: date_id
+        description: "Foreign key referencing the date dimension."
+      - name: customer_id
+        description: "Customer ID associated with the order."
+      - name: unique_customer_id
+        description: "Unique identifier for the customer across multiple orders."
+      - name: order_status
+        description: "Current status of the order."
+      - name: customer_city
+        description: "City of the customer."
+      - name: customer_state
+        description: "State of the customer."
+      - name: total_product_value
+        description: "Total value of the products in the order."
+      - name: total_freight_value
+        description: "Total freight cost for the order."
+      - name: total_order_value
+        description: "Combined value of products and freight for the order."
+      - name: total_payment_value
+        description: "Total payment made for the order."
+      - name: freight_cost_ratio
+        description: "Ratio of freight cost to total payment."
+      - name: product_value_ratio
+        description: "Ratio of product cost to total payment."

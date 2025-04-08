@@ -1,0 +1,98 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Dimension table for customers with enriched customer behavior metrics."
+    columns:
+      - name: unique_customer_id
+        description: "Stable identifier for a customer, used to track repeat purchases across orders."
+        tests:
+          - not_null
+          - unique
+      - name: customer_zip_code_prefix
+        description: "First five digits of the customer's zip code."
+      - name: customer_city
+        description: "City where the customer resides."
+      - name: customer_state
+        description: "State where the customer resides."
+      - name: first_order_date
+        description: "Date of the customer's first order."
+      - name: last_order_date
+        description: "Date of the customer's most recent order."
+      - name: total_orders
+        description: "Total number of orders placed by the customer."
+      - name: customer_type
+        description: "Customer classification based on number of purchases: New or Repeat."
+      - name: last_updated_at
+        description: "Timestamp of the last data update."
+
+  - name: dim_products
+    description: "Dimension table containing metadata about each product listed on the platform."
+    columns:
+      - name: product_id
+        description: "Unique identifier for each product."
+        tests:
+          - not_null
+          - unique
+      - name: product_category_name
+        description: "Root category of the product (in Portuguese)."
+      - name: product_weight_g
+        description: "Weight of the product in grams."
+      - name: product_length_cm
+        description: "Length of the product in centimeters."
+      - name: product_height_cm
+        description: "Height of the product in centimeters."
+      - name: product_width_cm
+        description: "Width of the product in centimeters."
+      - name: last_updated_at
+        description: "Timestamp of the last data update."
+
+  - name: dim_sellers
+    description: "Dimension table for sellers with basic metadata and fulfillment statistics."
+    columns:
+      - name: seller_id
+        description: "Unique identifier for each seller."
+        tests:
+          - not_null
+          - unique
+      - name: seller_zip_code_prefix
+        description: "First five digits of the seller's zip code."
+      - name: seller_city
+        description: "City where the seller is based."
+      - name: seller_state
+        description: "State where the seller is based."
+      - name: total_orders_fulfilled
+        description: "Total number of distinct orders fulfilled by the seller."
+      - name: last_shipping_deadline
+        description: "Latest shipping limit date among the seller's fulfilled orders."
+      - name: last_updated_at
+        description: "Timestamp of the last data update."
+
+  - name: dim_dates
+    description: "Date dimension table used for consistent and reusable time-based aggregations."
+    columns:
+      - name: date_id
+        description: "Surrogate key for the date (formatted as YYYYMMDD)."
+        tests:
+          - not_null
+          - unique
+      - name: full_date
+        description: "Full date in YYYY-MM-DD format."
+      - name: day_of_week
+        description: "Day of the week as a string (e.g., Monday, Tuesday)."
+      - name: is_weekend
+        description: "Boolean flag indicating if the date falls on a weekend."
+        tests:
+          - accepted_boolean_values
+      - name: month
+        description: "Numeric representation of the month."
+      - name: month_name
+        description: "Full month name (e.g., January, February)."
+      - name: quarter
+        description: "Quarter of the year (1 to 4)."
+      - name: year
+        description: "Year portion of the date."
+      - name: week_of_year
+        description: "ISO week number of the year."
+      - name: season
+        description: "Season derived from the month (e.g., Summer, Winter)."

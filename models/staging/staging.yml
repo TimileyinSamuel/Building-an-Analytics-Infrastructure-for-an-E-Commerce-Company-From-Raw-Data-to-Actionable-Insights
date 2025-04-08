@@ -1,0 +1,194 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Staging model for cleaned customer data."
+    columns:
+      - name: customer_id
+        description: "key to the orders dataset. Each order has a unique customer_id."
+      - name: unique_customer_id
+        description: "unique identifier of a customer."
+      - name: customer_zip_code_prefix
+        description: "first five digits of customer zip code"
+      - name: customer_city
+        description: "The city customer lives"
+      - name: customer_state
+        description: "The state the customer lives"
+      - name: last_updated_at
+        description: "The last time fivetran imported or updated this row"
+
+
+  - name: stg_geolocation
+    description: "Staging model for Brazilian zip codes and lat/lng coordinates."
+    columns:
+      - name: geolocation_zip_code_prefix
+        description: "first 5 digits of zip code"
+      - name: geolocation_lat
+        description: "latitude"
+      - name: geolocation_lng
+        description: "longitude"
+      - name: geolocation_city
+        description: "city name"
+      - name: geolocation_state
+        description: "state name"
+      - name: last_updated_at
+        description: "The last time fivetran imported or updated this row"
+
+
+  - name: stg_order_items
+    description: "Staging model for items purchased within each order."
+    columns:
+      - name: order_id
+        description: "order unique identifier"
+      - name: order_item_id
+        description: "sequential number identifying number of items included in the same order."
+      - name: product_id
+        description: "product unique identifier"
+      - name: seller_id
+        description: "seller unique identifier"
+      - name: shipping_limit_date
+        description: "Shows the seller shipping limit date for handling the order over to the logistic partner."
+      - name: price
+        description: "item price"
+        data_tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+      
+      - name: freight_value
+        description: "item freight value item (if an order has more than one item the freight value is split between items)"
+        data_tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+      - name: total_item_value
+        description: "sum of price and freight_value"
+      - name: last_updated_at
+        description: "The last time fivetran imported or updated this row"
+
+
+  - name: stg_order_payments
+    description: "Staging model for orders payment options."
+    columns:
+      - name: order_id
+        description: "unique identifier of an order."
+      - name: payment_sequential
+        description: "a customer may pay an order with more than one payment method. If he does so, a sequence will be created"
+      - name: payment_type
+        description: "method of payment chosen by the customer."
+      - name: payment_installments
+        description: "number of installments chosen by the customer."
+      - name: payment_value
+        description: "transaction value."
+      - name: last_updated_at
+        description: "The last time fivetran imported or updated this row"
+
+
+  - name: stg_order_reviews
+    description: "Staging model for reviews made by customers."
+    columns:
+      - name: review_id
+        description: "unique review identifier"
+      - name: order_id
+        description: "unique order identifier"
+      - name: review_score
+        description: "Note ranging from 1 to 5 given by the customer on a satisfaction survey."
+      - name: review_comment_title
+        description: "Comment title from the review left by the customer, in Portuguese."
+      - name: review_comment_message
+        description: "Comment message from the review left by the customer, in Portuguese."
+      - name: review_creation_date
+        description: "Shows the date in which the satisfaction survey was sent to the customer."
+      - name: review_answer_timestamp
+        description: "Shows satisfaction survey answer timestamp."
+
+      - name: has_comment
+        description: "Bolean flag stating if review_comment_message is null or not"
+        data_tests:
+          - accepted_boolean_values
+
+      - name: last_updated_at
+        description: "The last time fivetran imported or updated this row"
+
+
+  - name: stg_orders
+    description: "Staging model for core order-level information."
+    columns:
+      - name: order_id
+        description: "unique identifier of the order."
+      - name: customer_id
+        description: "key to the customer dataset. Each order has a unique customer_id."
+      - name: order_status
+        description: "Reference to the order status (delivered, shipped, etc)."
+      - name: order_purchase_timestamp
+        description: "Shows the purchase timestamp."
+      - name: order_approved_at
+        description: "Shows the payment approval timestamp."
+      - name: order_delivered_carrier_date
+        description: "Shows the order posting timestamp. When it was handled to the logistic partner."
+      - name: order_delivered_customer_date
+        description: "Shows the actual order delivery date to the customer."
+      - name: order_estimated_delivery_date
+        description: "Shows the actual order delivery date to the customer."
+
+      - name: is_late_delivery
+        description: "Description: Boolean flag indicating whether the customer's order was delivered after the estimated delivery date. Returns TRUE if the actual delivery date exceeded the estimate, signaling a late delivery."
+        data_tests:
+          - accepted_boolean_values
+
+      - name: is_estimate_met
+        description: "Description: Boolean flag showing whether the order was delivered on or before the estimated delivery date. Returns TRUE when the platform successfully met its delivery promise."
+        data_tests:
+          - accepted_boolean_values
+          
+      - name: last_updated_at
+        description: "The last time fivetran imported or updated this row"
+
+
+  - name: stg_products
+    description: "Staging model for products sold by the company."
+    columns:
+      - name: product_id
+        description: "unique product identifier"
+      - name: product_category_name
+        description: "root category of product, in Portuguese."
+      - name: product_weight_g
+        description: "product weight measured in grams."
+        data_tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+      - name: product_length_cm
+        description: "product length measured in centimeters."
+        data_tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+      - name: product_height_cm
+        description: "product height measured in centimeters."
+        data_tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+      - name: product_width_cm
+        description: "product width measured in centimeters."
+        data_tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              min_value: 0
+
+      - name: last_updated_at
+        description: "The last time fivetran imported or updated this row"
+
+
+  - name: stg_sellers
+    description: "Staging model for sellers that fulfilled orders made at Olist."
+    columns:
+      - name: seller_id
+        description: "seller unique identifier"
+      - name: seller_zip_code_prefix
+        description: "first 5 digits of seller zip code"
+      - name: seller_city
+        description: "seller city name"
+      - name: seller_state
+        description: "seller state name"
+      - name: last_updated_at
+        description: "The last time fivetran imported or updated this row"
