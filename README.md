@@ -127,6 +127,8 @@ The following dashboard was built using Tableau to deliver actionable insight li
 - Shipping SLA breaches
 - Regional delivery delays
 
+![E-commerce Dashboard](/Users/timmytesla/Documents/THIRD SEMESTER MATERIALS/E-commerce_Dashboard.png)
+
 ---
 
 ## ✅ Testing & Documentation
