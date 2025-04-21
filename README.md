@@ -22,6 +22,9 @@ The pipeline is designed to provide actionable insights into **customer behavior
 - **dbt** – Transformation, testing, documentation, and version control  
 - **Tableau** – Business intelligence and dashboarding  
 
+![image](https://github.com/user-attachments/assets/46945d53-3475-43c2-b45a-af9726877da6)
+
+
 ---
 
 ## 📂 Ingested Datasets
@@ -127,7 +130,8 @@ The following dashboard was built using Tableau to deliver actionable insight li
 - Shipping SLA breaches
 - Regional delivery delays
 
-![E-commerce Dashboard](/Users/timmytesla/Documents/THIRD SEMESTER MATERIALS/E-commerce_Dashboard.png)
+![E-commerce_Dashboard](https://github.com/user-attachments/assets/878036a1-199d-407b-833e-72ba5af5b18f)
+
 
 ---
 
