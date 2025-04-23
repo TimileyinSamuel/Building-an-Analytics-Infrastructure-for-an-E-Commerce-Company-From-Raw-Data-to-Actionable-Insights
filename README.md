@@ -40,6 +40,8 @@ The pipeline is designed to provide actionable insights into **customer behavior
 | `products`           | Product metadata and physical characteristics                               |
 | `sellers`            | Seller identities and regional info                                         |
 
+![image](https://github.com/user-attachments/assets/1fae851d-83ec-4d7a-b67c-d12f6252441f)
+
 ---
 
 ## 🧱 dbt Models & Data Warehouse Design
@@ -111,6 +113,8 @@ These fact models follow **star schema design**, optimized for fast querying and
 - Regional revenue and product category demand
 
 Each mart is curated for direct integration into Tableau dashboard.
+
+![image](https://github.com/user-attachments/assets/d1ea197a-72b7-4b6e-8c73-a49513980da1)
 
 ---
 
