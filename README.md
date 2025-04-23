@@ -68,15 +68,16 @@ The pipeline is designed to provide actionable insights into **customer behavior
   Core transactional model capturing order status, key timestamps (purchase, delivery), and order volume.  
   Materialized as an **incremental model** to efficiently handle new data without full refresh.
 
+- **`fct_order_items`**  
+  This table stores detailed data at the item level within each order. It tracks product quantities, individual item prices, and freight costs associated with each order item. The fact order items table allows for granular analysis of product sales   
+  performance, pricing strategies, and logistics costs.
+
 - **`fct_reviews`**  
   Contains review scores, comments, and timestamps. Used to track customer satisfaction.  
   Also materialized as **incremental** to optimize for continuous inflow.
 
 - **`fct_payments`**  
   Captures payment method, installments, and total values. Supports payment trends and cash flow tracking.
-
-- **`fct_products`**  
-  Aggregates product-level sales data. Supports insights into bestsellers, category performance, and return rates.
 
 - **`fct_deliveries`**  
   Calculates shipping durations, late deliveries, and SLA adherence. Crucial for operational efficiency analysis.
