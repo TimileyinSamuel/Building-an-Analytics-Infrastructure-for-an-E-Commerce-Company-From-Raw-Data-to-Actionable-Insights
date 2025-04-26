@@ -22,6 +22,9 @@ The pipeline is designed to provide actionable insights into **customer behavior
 - **dbt** – Transformation, testing, documentation, and version control  
 - **Tableau** – Business intelligence and dashboarding  
 
+![image](https://github.com/user-attachments/assets/46945d53-3475-43c2-b45a-af9726877da6)
+
+
 ---
 
 ## 📂 Ingested Datasets
@@ -36,6 +39,8 @@ The pipeline is designed to provide actionable insights into **customer behavior
 | `order_reviews`      | Customer feedback and sentiment                                             |
 | `products`           | Product metadata and physical characteristics                               |
 | `sellers`            | Seller identities and regional info                                         |
+
+![image](https://github.com/user-attachments/assets/1fae851d-83ec-4d7a-b67c-d12f6252441f)
 
 ---
 
@@ -63,15 +68,16 @@ The pipeline is designed to provide actionable insights into **customer behavior
   Core transactional model capturing order status, key timestamps (purchase, delivery), and order volume.  
   Materialized as an **incremental model** to efficiently handle new data without full refresh.
 
+- **`fct_order_items`**  
+  This table stores detailed data at the item level within each order. It tracks product quantities, individual item prices, and freight costs associated with each order item. The fact order items table allows for granular analysis of product sales   
+  performance, pricing strategies, and logistics costs.
+
 - **`fct_reviews`**  
   Contains review scores, comments, and timestamps. Used to track customer satisfaction.  
   Also materialized as **incremental** to optimize for continuous inflow.
 
 - **`fct_payments`**  
   Captures payment method, installments, and total values. Supports payment trends and cash flow tracking.
-
-- **`fct_products`**  
-  Aggregates product-level sales data. Supports insights into bestsellers, category performance, and return rates.
 
 - **`fct_deliveries`**  
   Calculates shipping durations, late deliveries, and SLA adherence. Crucial for operational efficiency analysis.
@@ -109,6 +115,8 @@ These fact models follow **star schema design**, optimized for fast querying and
 
 Each mart is curated for direct integration into Tableau dashboard.
 
+![image](https://github.com/user-attachments/assets/d1ea197a-72b7-4b6e-8c73-a49513980da1)
+
 ---
 
 ## 📊 Tableau Dashboard
@@ -127,7 +135,8 @@ The following dashboard was built using Tableau to deliver actionable insight li
 - Shipping SLA breaches
 - Regional delivery delays
 
-![E-commerce Dashboard](/Users/timmytesla/Documents/THIRD SEMESTER MATERIALS/E-commerce_Dashboard.png)
+![E-commerce_Dashboard](https://github.com/user-attachments/assets/878036a1-199d-407b-833e-72ba5af5b18f)
+
 
 ---
 
